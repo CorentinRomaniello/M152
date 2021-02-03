@@ -1,3 +1,6 @@
+<?php
+require_once "../controller/post_controller.php";
+?>
 <!--
     Auteur : Romaniello Corentin
     Fichier : home.php
@@ -41,21 +44,21 @@
         <h1 class="display-6 text-light">Création d'un Post</h1>
 
         <!-- Card -->
-        <div class="p-2 card w-75 bg-secondary">
+        <div class="p-2 card w-75 h-50 bg-secondary">
 
-            <form>
+            <form action="../view/post.php" method="POST" enctype="multipart/form-data">
 
                 <table class="table table-borderless">
                     <tr>
                         <td>
                             <label class="text-light" for="descriptionPost">Description</label>
-                            <textarea class="form-control" id="descriptionPost" rows="3"></textarea>
+                            <textarea class="form-control" name="descriptionPost" id="descriptionPost" rows="3"></textarea>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <label class="text-light" for="imgPost">Image(s)</label>
-                            <input type="file" class="form-control" accept="image/*" id="imgPost" multiple>
+                            <input type="file" class="form-control" accept="image/*" name="imgPost[]" id="imgPost" multiple>
                         </td>
                     </tr>
                     <tr>

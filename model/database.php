@@ -3,7 +3,7 @@
 /**
  * @remark Mettre le bon chemin d'accès à votre fichier contenant les constantes
  */
-require_once './conparam.php';
+require_once '../model/conparam.php';
 
 /**
  * @brief	Helper class encapsulating
