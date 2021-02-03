@@ -3,7 +3,7 @@
     Fichier : home.php
 -->
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" style="width: 100%; height: 100%">
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -19,32 +19,58 @@
     <script src="jquery-3.5.1.min.js"></script>
 </head>
 
-<body>
+<body style="width: 100%; height: 100%">
 
     <!-- Navbar --->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <div class="navbar-brand">M152</div>
-            <input type="text" placeholder="Chercher" class=" w-25 form-control">
-            <a class="navbar-brand" href="./home.php">Home</a>
-            <a class="navbar-brand" href="./post.php">Post</a>
-            <img class="navbar-brand" style="width: 2%; height: 2%;" src="../img/PhotoProfil.png">
+    <nav style="width: 100%; height: 8%" class="navbar navbar-dark bg-dark justify-content-between">
+        <a class="navbar-brand">M152</a>
+        <div>
+            <a class="navbar-brand" href="../view/home.php">Home</a>
+            <a class="navbar-brand" href="../view/post.php">Post</a>
         </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+        </svg>
+
     </nav>
 
-    <div class="m-5" style="float: right">
-        <h1>Création d'un post</h1>
+    <div class="bg-secondary mt-5 w-100 h-50 d-flex flex-column justify-content-center align-items-center">
+
+
+        <h1 class="display-6 text-light">Création d'un Post</h1>
+
+        <!-- Card -->
+        <div class="p-2 card w-75 bg-secondary">
+
+            <form>
+
+                <table class="table table-borderless">
+                    <tr>
+                        <td>
+                            <label class="text-light" for="descriptionPost">Description</label>
+                            <textarea class="form-control" id="descriptionPost" rows="3"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="text-light" for="imgPost">Image(s)</label>
+                            <input type="file" class="form-control" accept="image/*" id="imgPost" multiple>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="submit" class="btn btn-dark btn-outline-light">
+                        </td>
+                    </tr>
+                </table>
+
+            </form>
+
+        </div>
+
     </div>
 
-    <div class="m-5 d-flex flex-row">
-        <!-- Card -->
-        <div class="p-2 card" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-        </div>
     </div>
 
 </body>
