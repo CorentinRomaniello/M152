@@ -1,28 +1,56 @@
 <?php
 require_once "../model/functions.php";
 
-// Var use to know if the file is an image
-$check = array();
+if (filter_has_var(INPUT_POST, 'action')) {
+    var_dump($_FILES['imgPost']);
 
-$target_file = array();
-$imgsTmpName = array();
-$error = "";
+    $descriptionPost = filter_input(INPUT_POST, 'descriptionPost', FILTER_SANITIZE_STRING);
 
-// Directory for image
-$target_dir = "../img_uploads/";
+    $MAX_SIZE_FILE = 3000000;
+    $MAX_SIZE_POST = 70000000;
 
-foreach ($_FILES['imgPost']['tmp_name'] as $imgTmpName) {
-    array_push($check, getimagesize($imgTmpName));
-    array_push($imgsTmpName, $imgTmpName);
-}
+    // Var use to know if the file is an image
+    $check = array();
 
-foreach ($_FILES["imgPost"]["name"] as $imgName)
-    array_push($target_file, $target_dir . basename($imgName));
+    $target_file = array();
+    $imgsTmpName = array();
+    $error = "";
+    $size = 0;
+    $idPost = 0;
 
+    if (empty($descriptionPost))
+        $error = "Description is empty !";
 
-if (in_array(false, $check))
-    $error = "A file enter is not an image";
-else {
-    for ($i = 0; $i < count($target_file); $i++)
-        move_uploaded_file($imgsTmpName[$i], $target_file[$i]);
+    // Directory for image
+    $target_dir = "../img_uploads/";
+
+    foreach ($_FILES['imgPost']['tmp_name'] as $imgTmpName) {
+        array_push($check, getimagesize($imgTmpName));
+        array_push($imgsTmpName, $imgTmpName);
+    }
+
+    foreach ($_FILES["imgPost"]["name"] as $imgName) {
+        array_push($target_file, $target_dir . uniqid() . "." . pathinfo($imgName, PATHINFO_EXTENSION));
+    }
+
+    foreach ($_FILES["imgPost"]["size"] as $imgSize) {
+        $size += $imgSize;
+    }
+
+    if (count($target_file) > 1) {
+        if ($size > $MAX_SIZE_FILE)
+            $error = "File is too big";
+    } else 
+    if ($size > $MAX_SIZE_POST)
+        $error = "Post is too big";
+
+    if (in_array(false, $check))
+        $error = "A file enter is not an image";
+    if ($error == "") {
+        $idPost = AddPost($descriptionPost, date("Y.m.d H:i:s"));
+        for ($i = 0; $i < count($target_file); $i++) {
+            move_uploaded_file($imgsTmpName[$i], $target_file[$i]);
+            AddMedia($target_file[$i], pathinfo($target_file[$i], PATHINFO_EXTENSION), date("Y.m.d H:i:s"), $idPost);
+        }
+    }
 }

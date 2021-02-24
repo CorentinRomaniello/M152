@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 27, 2021 at 03:07 PM
+-- Generation Time: Feb 24, 2021 at 02:16 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -30,10 +30,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `media` (
   `idMedia` int(11) NOT NULL,
-  `nomFichierMedia` varchar(15) NOT NULL,
-  `typeMedia` int(15) NOT NULL,
+  `nomFichierMedia` varchar(100) NOT NULL,
+  `typeMedia` varchar(30) NOT NULL,
   `dateCreationMedia` datetime NOT NULL,
-  `dateModificationMedia` datetime NOT NULL
+  `dateModificationMedia` datetime DEFAULT NULL,
+  `idPost` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -46,8 +47,7 @@ CREATE TABLE `post` (
   `idPost` int(11) NOT NULL,
   `commentaire` varchar(100) DEFAULT NULL,
   `creationDatePost` datetime NOT NULL,
-  `modificationDatePost` datetime NOT NULL,
-  `idMedia` int(11) NOT NULL
+  `modificationDatePost` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -58,14 +58,14 @@ CREATE TABLE `post` (
 -- Indexes for table `media`
 --
 ALTER TABLE `media`
-  ADD PRIMARY KEY (`idMedia`);
+  ADD PRIMARY KEY (`idMedia`),
+  ADD KEY `fk_idPost` (`idPost`);
 
 --
 -- Indexes for table `post`
 --
 ALTER TABLE `post`
-  ADD PRIMARY KEY (`idPost`),
-  ADD KEY `idMedia` (`idMedia`);
+  ADD PRIMARY KEY (`idPost`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -75,23 +75,23 @@ ALTER TABLE `post`
 -- AUTO_INCREMENT for table `media`
 --
 ALTER TABLE `media`
-  MODIFY `idMedia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idMedia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `idPost` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPost` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `post`
+-- Constraints for table `media`
 --
-ALTER TABLE `post`
-  ADD CONSTRAINT `fk_idMedia` FOREIGN KEY (`idMedia`) REFERENCES `media` (`idMedia`);
+ALTER TABLE `media`
+  ADD CONSTRAINT `fk_idPost` FOREIGN KEY (`idPost`) REFERENCES `post` (`idPost`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

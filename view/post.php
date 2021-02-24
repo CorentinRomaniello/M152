@@ -38,6 +38,14 @@ require_once "../controller/post_controller.php";
 
     </nav>
 
+    <?php if (isset($error) && $error != "") : ?>
+
+        <div class="alert alert-danger" role="alert">
+            <?= "Warning:" . " " .  $error; ?>
+        </div>
+
+    <?php endif; ?>
+
     <div class="bg-secondary mt-5 w-100 h-50 d-flex flex-column justify-content-center align-items-center">
 
 
@@ -52,18 +60,18 @@ require_once "../controller/post_controller.php";
                     <tr>
                         <td>
                             <label class="text-light" for="descriptionPost">Description</label>
-                            <textarea class="form-control" name="descriptionPost" id="descriptionPost" rows="3"></textarea>
+                            <textarea required class="form-control" name="descriptionPost" id="descriptionPost" rows="3"></textarea>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <label class="text-light" for="imgPost">Image(s)</label>
-                            <input type="file" class="form-control" accept="image/*" name="imgPost[]" id="imgPost" multiple>
+                            <input required type="file" class="form-control" accept="image/*" name="imgPost[]" id="imgPost" multiple>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="submit" class="btn btn-dark btn-outline-light">
+                            <input type="submit" name="action" class="btn btn-dark btn-outline-light">
                         </td>
                     </tr>
                 </table>
