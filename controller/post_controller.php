@@ -2,7 +2,6 @@
 require_once "../model/functions.php";
 
 if (filter_has_var(INPUT_POST, 'action')) {
-    var_dump($_FILES['imgPost']);
 
     $descriptionPost = filter_input(INPUT_POST, 'descriptionPost', FILTER_SANITIZE_STRING);
 
@@ -46,11 +45,26 @@ if (filter_has_var(INPUT_POST, 'action')) {
 
     if (in_array(false, $check))
         $error = "A file enter is not an image";
+
     if ($error == "") {
-        $idPost = AddPost($descriptionPost, date("Y.m.d H:i:s"));
-        for ($i = 0; $i < count($target_file); $i++) {
-            move_uploaded_file($imgsTmpName[$i], $target_file[$i]);
-            AddMedia($target_file[$i], pathinfo($target_file[$i], PATHINFO_EXTENSION), date("Y.m.d H:i:s"), $idPost);
+        try {
+            $db = EDatabase::getInstance();
+            $db->beginTransaction();
+
+            $idPost = AddPost($descriptionPost, date("Y.m.d H:i:s"));
+
+            for ($i = 0; $i < count($target_file); $i++) {
+
+                if (move_uploaded_file($imgsTmpName[$i], $target_file[$i])) {
+
+                    AddMedia($target_file[$i], pathinfo($target_file[$i], PATHINFO_EXTENSION), date("Y.m.d H:i:s"), $idPost);
+                }
+            }
+
+            $db->commit();
+        } catch (Throwable $e) {
+            $db->rollback();
+            throw $e;
         }
     }
 }

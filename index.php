@@ -3,5 +3,5 @@
     Fichier : index.php
 -->
 <?php
-require_once 'view/home.php';
+header("location: view/home.php");
 ?>

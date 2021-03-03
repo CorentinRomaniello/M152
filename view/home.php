@@ -1,3 +1,6 @@
+<?php
+require_once "../controller/home_controller.php";
+?>
 <!--
     Auteur : Romaniello Corentin
     Fichier : home.php
@@ -17,9 +20,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
     <!-- JQuery -->
     <script src="jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<body style="width: 100%; height: 100%;">
+<body style="width: 100%; height: 100%;" onload="GetData();">
 
     <!-- Navbar --->
     <nav style="width: 100%; height: 8%" class="navbar navbar-dark bg-dark justify-content-between">
@@ -38,6 +42,26 @@
     <div class="bg-secondary mt-5 w-100 h-25 d-flex justify-content-center align-items-center">
         <h1 class="display-1 text-light">Welcome</h1>
     </div>
+
+    <div class="mt-5 d-flex flex-column justify-content-center align-items-center" id="post">
+
+        <?= $result; ?>
+
+    </div>
+
 </body>
 
 </html>
+
+<script>
+    /*
+    function GetData() {
+        $.ajax({
+            url: '../controller/home_controller.php',
+            type: 'POST',
+            success: function(res) {
+                document.getElementById('post').innerHTML = res;
+            },
+        })
+    }*/
+</script>

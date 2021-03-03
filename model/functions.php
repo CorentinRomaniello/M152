@@ -54,7 +54,7 @@ function DaleteMedia($idMedia)
 function GetMedia()
 {
     $sql = "SELECT * FROM media";
-    $res = EDatabase::query($sql);
+    $res = EDatabase::query($sql)->fetchAll(PDO::FETCH_ASSOC);
     return $res;
 }
 
@@ -104,6 +104,13 @@ function DeletePost($idPost)
 function GetPost()
 {
     $sql = "SELECT * FROM post";
-    $res = EDatabase::query($sql);
+    $res = EDatabase::query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    return $res;
+}
+
+function GetMediaByIdPost($idPost)
+{
+    $sql = "SELECT * FROM media where idPost = $idPost";
+    $res = EDatabase::query($sql)->fetchAll(PDO::FETCH_ASSOC);
     return $res;
 }
