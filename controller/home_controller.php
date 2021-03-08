@@ -9,8 +9,8 @@ foreach (GetPost() as $p) {
 
     $id++;
 
-    $result .= "<div class='card mb-5' style='width: 25%;'>";
-    $result .= "<div id='carousel_$id' class='carousel slide' data-bs-ride='carousel'>";
+    $result .= "<div class='card mb-5 w-25 h-25'>";
+    $result .= "<div id='carousel_$id' class='carousel slide'>";
     $result .= "<div class='carousel-inner'>";
 
     $first = true;
@@ -18,15 +18,28 @@ foreach (GetPost() as $p) {
     foreach (GetMediaByIdPost($p['idPost']) as $m) {
 
         $nomFichier = $m['nomFichierMedia'];
+        $typeFichier = $m['typeMedia'];
 
         if ($first) {
-            $result .= "<div class='carousel-item active'>";
+            $result .= "<div class='carousel-item active w-100 h-100'>";
             $first = false;
         } else {
             $result .= "<div class='carousel-item'>";
         }
 
-        $result .= "<img class='d-block w-100' src='$nomFichier' alt='$nomFichier'>";
+        switch ($typeFichier) {
+            case 'audio':
+                $result .= "<audio class='card-img-top' controls src='$nomFichier'>Your browser does not support the<code>audio</code> element.</audio>";
+                break;
+            case 'image':
+                $result .= "<img class='card-img-top' src='$nomFichier' alt='$nomFichier'>";
+                break;
+            case 'video':
+                $result .= "<video class='card-img-top' controls muted loop autoplay><source src='$nomFichier' type='video/mp4'><p>Votre navigateur ne prend pas en charge les vidéos HTML5.</p></video>";
+            default:
+                break;
+        }
+
         $result .= "</div>";
 
         $first = false;
@@ -50,7 +63,7 @@ foreach (GetPost() as $p) {
     $result .= "</div>";
 
     $result .= "<div class='card-body'>";
-    $result .= "<h5 class='card-title'>Card title</h5>";
+    $result .= "<h5 class='card-title'>Commentaire</h5>";
     $result .= "<p class='card-text'>$commentaire</p>";
     $result .= "</div>";
     $result .= "</div>";

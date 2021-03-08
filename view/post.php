@@ -65,8 +65,8 @@ require_once "../controller/post_controller.php";
                     </tr>
                     <tr>
                         <td>
-                            <label class="text-light" for="imgPost">Image(s)</label>
-                            <input required type="file" class="form-control" accept="image/*" name="imgPost[]" id="imgPost" multiple>
+                            <label class="text-light" for="filePost">File(s)</label>
+                            <input required type="file" class="form-control" accept="audio/*,video/*,image/*" name="filePost[]" id="filePost" multiple>
                         </td>
                     </tr>
                     <tr>
