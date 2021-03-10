@@ -108,9 +108,20 @@ function GetPost()
     return $res;
 }
 
+function GetPostById($idPost)
+{
+    $sql = "SELECT * FROM post where idPost = :idPost";
+    $res = EDatabase::prepare($sql);
+    $res->bindParam(':idPost', $idPost, PDO::PARAM_INT);
+    $res->execute();
+    return $res->fetchAll(PDO::FETCH_ASSOC);
+}
+
 function GetMediaByIdPost($idPost)
 {
-    $sql = "SELECT * FROM media where idPost = $idPost";
-    $res = EDatabase::query($sql)->fetchAll(PDO::FETCH_ASSOC);
-    return $res;
+    $sql = "SELECT * FROM media where idPost = :idPost";
+    $res = EDatabase::prepare($sql);
+    $res->bindParam(':idPost', $idPost, PDO::PARAM_INT);
+    $res->execute();
+    return $res->fetchAll(PDO::FETCH_ASSOC);
 }

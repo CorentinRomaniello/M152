@@ -23,7 +23,7 @@ require_once "../controller/home_controller.php";
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<body style="width: 100%; height: 100%;" onload="GetData();">
+<body style="width: 100%; height: 100%;">
 
     <!-- Navbar --->
     <nav style="width: 100%; height: 8%" class="navbar navbar-dark bg-dark justify-content-between">
