@@ -5,6 +5,12 @@ if (filter_has_var(INPUT_POST, 'action')) {
 
     $descriptionPost = filter_input(INPUT_POST, 'descriptionPost', FILTER_SANITIZE_STRING);
 
+    $update = filter_input(INPUT_POST, 'update', FILTER_SANITIZE_STRING);
+    $idPostUpdate = filter_input(INPUT_POST, 'idPost', FILTER_VALIDATE_INT);
+    $idMedia = filter_input(INPUT_POST, 'idMedia', FILTER_SANITIZE_STRING);
+
+    $idMedia = explode(';', $idMedia);
+
     $MAX_SIZE_FILE = 3000000;
     $MAX_SIZE_POST = 70000000;
 
@@ -54,15 +60,37 @@ if (filter_has_var(INPUT_POST, 'action')) {
             $db = EDatabase::getInstance();
             $db->beginTransaction();
 
-            $idPost = AddPost($descriptionPost, date("Y.m.d H:i:s"));
+            if ($update == '1') {
 
-            for ($i = 0; $i < count($target_file); $i++) {
+                $namesMedias = array();
 
-                if (move_uploaded_file($filesTmpName[$i], $target_file[$i])) {
+                foreach (GetMediaByIdPost($idPostUpdate) as $m)
+                    array_push($namesMedias, $m['nomFichierMedia']);
 
-                    AddMedia($target_file[$i], explode('/', $typesFiles[$i])[0], date("Y.m.d H:i:s"), $idPost);
+                for ($i = 0; $i < count($idMedia); $i++)
+                    DeleteMedia($idMedia[$i]);
+
+                foreach ($namesMedias as $nm)
+                    unlink($nm);
+
+                UpdatePost($idPostUpdate, $descriptionPost, date("Y.m.d H:i:s"));
+
+                for ($i = 0; $i < count($target_file); $i++) {
+
+                    if (move_uploaded_file($filesTmpName[$i], $target_file[$i])) {
+                        AddMedia($target_file[$i], explode('/', $typesFiles[$i])[0], date("Y.m.d H:i:s"), $idPostUpdate);
+                    }
+                }
+            } else {
+                $idPostCreate = AddPost($descriptionPost, date("Y.m.d H:i:s"));
+                for ($i = 0; $i < count($target_file); $i++) {
+
+                    if (move_uploaded_file($filesTmpName[$i], $target_file[$i])) {
+                        AddMedia($target_file[$i], explode('/', $typesFiles[$i])[0], date("Y.m.d H:i:s"), $idPostCreate);
+                    }
                 }
             }
+
             $db->commit();
         } catch (Throwable $e) {
             $db->rollback();

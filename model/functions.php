@@ -26,8 +26,7 @@ function UpdateMedia($idMedia, $nomFichierMedia, $typeMedia, $dateModificationMe
         . "nomFichierMedia = :nomFichierMedia, "
         . "typeMedia = :typeMedia, "
         . "dateModificationMedia = :dateModificationMedia,"
-        . "idPost = :idPost,"
-        . "idMedia = :idMedia, "
+        . "idPost = :idPost "
         . "WHERE idMedia = :idMedia ";
 
     $request = EDatabase::prepare($sql);
@@ -44,7 +43,7 @@ function UpdateMedia($idMedia, $nomFichierMedia, $typeMedia, $dateModificationMe
     }
 }
 
-function DaleteMedia($idMedia)
+function DeleteMedia($idMedia)
 {
     $sql = "DELETE FROM media WHERE idMedia = :idMedia";
     $request = EDatabase::prepare($sql);
@@ -78,8 +77,7 @@ function UpdatePost($idPost, $commentaire, $modificationDatePost)
 {
     $sql = "UPDATE post SET "
         . "commentaire = :commentaire, "
-        . "modificationDatePost = :modificationDatePost, "
-        . "idPost = :idPost, "
+        . "modificationDatePost = :modificationDatePost "
         . "WHERE idPost = :idPost ";
 
     $request = EDatabase::prepare($sql);
