@@ -4,7 +4,6 @@ require_once "../model/functions.php";
 if (filter_has_var(INPUT_POST, 'action')) {
 
     $descriptionPost = filter_input(INPUT_POST, 'descriptionPost', FILTER_SANITIZE_STRING);
-
     $update = filter_input(INPUT_POST, 'update', FILTER_SANITIZE_STRING);
     $idPostUpdate = filter_input(INPUT_POST, 'idPost', FILTER_VALIDATE_INT);
     $idMedia = filter_input(INPUT_POST, 'idMedia', FILTER_SANITIZE_STRING);

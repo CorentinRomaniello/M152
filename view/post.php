@@ -1,5 +1,5 @@
 <?php
-require_once "../controller/post_controller.php";
+// require_once "../controller/post_controller.php";
 ?>
 <!--
     Auteur : Romaniello Corentin
@@ -19,7 +19,7 @@ require_once "../controller/post_controller.php";
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
     <!-- JQuery -->
-    <script src="jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body style="width: 100%; height: 100%">
@@ -54,35 +54,66 @@ require_once "../controller/post_controller.php";
         <!-- Card -->
         <div class="p-2 card w-75 h-50 bg-secondary">
 
-            <form action="../view/post.php" method="POST" enctype="multipart/form-data">
+            <!-- <form action="../view/post.php" method="POST" enctype="multipart/form-data"> -->
 
-                <table class="table table-borderless">
-                    <tr>
-                        <td>
-                            <label class="text-light" for="descriptionPost">Description</label>
-                            <textarea required class="form-control" name="descriptionPost" id="descriptionPost" rows="3"></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="text-light" for="filePost">File(s)</label>
-                            <input required type="file" class="form-control" accept="audio/*,video/*,image/*" name="filePost[]" id="filePost" multiple>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="submit" name="action" class="btn btn-dark btn-outline-light">
-                        </td>
-                    </tr>
-                </table>
-
-            </form>
+            <table class="table table-borderless">
+                <tr>
+                    <td>
+                        <label class="text-light" for="descriptionPost">Description</label>
+                        <textarea required class="form-control" name="descriptionPost" id="descriptionPost" rows="3"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="text-light" for="filePost">File(s)</label>
+                        <input required type="file" class="form-control" accept="audio/*,video/*,image/*" name="filePost[]" id="filePost" multiple>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" value="Envoyer" onclick="UploadData();" name="action" id="action" class="btn btn-dark btn-outline-light">
+                    </td>
+                </tr>
+            </table>
+            <!-- </form> -->
 
         </div>
 
     </div>
 
     </div>
+
+    <script>
+        function UploadData() {
+
+            let form_data = new FormData();
+            let filePost = document.getElementById('filePost').files;
+            let descriptionPost = document.getElementById('descriptionPost').value;
+            let filesPostCount = document.getElementById('filePost').files.length;
+            let action = document.getElementById('action').value;
+
+            for (let i = 0; i < filesPostCount; i++) {
+                form_data.append("filePost[]", filePost[i]);
+            }
+
+            form_data.append("descriptionPost", descriptionPost);
+            form_data.append('action', action);
+
+            $.ajax({
+                url: '../controller/post_controller.php',
+                type: 'POST',
+                dataType: 'json',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+
+                success: function(res) {
+                    console.log(res);
+                }
+            });
+        }
+    </script>
 
 </body>
 
